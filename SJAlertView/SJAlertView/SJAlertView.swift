@@ -12,6 +12,9 @@ typealias block = () -> ()
 
 class SJAlertView: UIViewController {
 
+    static let titleFontSize: CGFloat = 22
+    static let messageFontSize: CGFloat = 16
+    
     fileprivate var alertTitle: String?
     fileprivate var alertMessage: String?
     fileprivate var leftButtonTitle: String?
@@ -21,6 +24,7 @@ class SJAlertView: UIViewController {
     fileprivate var cornerRadius: CGFloat = 0.0
     fileprivate var viewWidth: CGFloat = 0.0
     fileprivate var viewHeight: CGFloat = 0.0
+    fileprivate var postionY: CGFloat = 0.0
     
     fileprivate var leftButtonAction: block?
     fileprivate var rightButtonAction: block?
@@ -92,14 +96,16 @@ class SJAlertView: UIViewController {
         viewHeight = self.view.frame.size.height
         
         //Step 1
-        drawBackView()
+        calculateBackViewHeight()
         //Step 2
-        drawTitle()
+        drawBackView()
         //Step 3
-        drawMassage()
+        drawTitle()
         //Step 4
-        drawLeftButton()
+        drawMassage()
         //Step 5
+        drawLeftButton()
+        //Step 6
         drawRightButton()
     }
     
@@ -108,8 +114,21 @@ class SJAlertView: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func calculateBackViewHeight(){
+        if let text = self.alertMessage {
+            let constraint = CGSize(width: viewWidth - 40, height: viewHeight)
+            let attributedText = NSAttributedString(string: text, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: SJAlertView.messageFontSize)])
+            let rect: CGRect = attributedText.boundingRect(with: constraint, options: NSStringDrawingOptions.usesLineFragmentOrigin, context: nil)
+            let size = rect.size
+            
+            if size.height < (UIScreen.main.bounds.size.height - CustomPresentationController.viewNeedAddPadding) {
+                viewHeight = size.height < 80 ? 80 : size.height
+            }
+        }
+    }
+    
     func drawBackView(){
-        let backView = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
+        let backView = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight + CustomPresentationController.viewNeedAddPadding - 50))
         backView.backgroundColor = UIColor.white
         backView.layer.cornerRadius = self.cornerRadius
         backView.layer.masksToBounds = true
@@ -123,26 +142,29 @@ class SJAlertView: UIViewController {
         let lblTitle = UILabel(frame: CGRect(x: leftPadding, y: topPadding, width: viewWidth - (leftPadding * 2), height: 40))
         lblTitle.textAlignment = .center
         lblTitle.text = self.alertTitle
-        lblTitle.font = UIFont.boldSystemFont(ofSize: 22)
+        lblTitle.font = UIFont.boldSystemFont(ofSize: SJAlertView.titleFontSize)
         self.view.addSubview(lblTitle)
+        
+        postionY = topPadding + lblTitle.frame.size.height
     }
     
     func drawMassage(){
         let leftPadding: CGFloat = 20
-        let topPadding: CGFloat = 50 // lblTitle.orgin.y + lblTitle.frame.height
         
-        let lblMassage = UILabel(frame: CGRect(x: leftPadding, y: topPadding, width: viewWidth - (leftPadding * 2), height: (viewHeight / 7) * 4))
+        let lblMassage = UILabel(frame: CGRect(x: leftPadding, y: postionY, width: viewWidth - (leftPadding * 2), height: viewHeight))
         lblMassage.textAlignment = .center
-        lblMassage.text = self.alertTitle
-        lblMassage.font = UIFont.systemFont(ofSize: 16)
+        lblMassage.text = self.alertMessage
+        lblMassage.numberOfLines = 0
+        lblMassage.font = UIFont.systemFont(ofSize: SJAlertView.messageFontSize)
         self.view.addSubview(lblMassage)
+        
+        postionY += lblMassage.frame.size.height
     }
     
     func drawLeftButton(){
         let leftPadding: CGFloat = 20
-        let topPadding: CGFloat = 50 + ((viewHeight / 7) * 4) // lblMassage.orgin.y + lblMassage.frame.height
         
-        let leftButton = UIButton(frame: CGRect(x: leftPadding, y: topPadding, width: ((viewWidth - (leftPadding * 2)) / 2), height: 40))
+        let leftButton = UIButton(frame: CGRect(x: leftPadding, y: postionY + 15, width: ((viewWidth - (leftPadding * 2)) / 2), height: 40))
         leftButton.addTarget(self, action: #selector(leftButtonClick), for: UIControlEvents.touchUpInside)
         self.view.addSubview(leftButton)
         
@@ -165,9 +187,8 @@ class SJAlertView: UIViewController {
     
     func drawRightButton(){
         let leftPadding: CGFloat = 20 + ((viewWidth - (20 * 2)) / 2)
-        let topPadding: CGFloat = 50 + ((viewHeight / 7) * 4) // lblMassage.orgin.y + lblMassage.frame.height
         
-        let rightButton = UIButton(frame: CGRect(x: leftPadding, y: topPadding, width: ((viewWidth - (20 * 2)) / 2), height: 40))
+        let rightButton = UIButton(frame: CGRect(x: leftPadding, y: postionY + 15, width: ((viewWidth - (20 * 2)) / 2), height: 40))
         rightButton.addTarget(self, action: #selector(rightButtonClick), for: UIControlEvents.touchUpInside)
         self.view.addSubview(rightButton)
         
@@ -203,6 +224,7 @@ extension SJAlertView:UIViewControllerTransitioningDelegate{
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         if presented == self {
+            CustomPresentationController.message = self.alertMessage
             return  CustomPresentationController(presentedViewController: presented, presenting: presenting)
         }else{
             return nil

@@ -30,7 +30,7 @@ class ViewController: UIViewController {
 
     @objc func button_Click(){
         let alert = SJAlertView()
-        alert.setView(title: "Title", mssage: "Massage", lButtontitle: "Button 1", rButtonTitle: "Button 2", lButtonColor: UIColor.blue, rButtonColor: UIColor.white, radius: 5, leftAction: {
+        alert.setView(title: "Title", mssage: "Properties associate values with a particular class, structure, or enumeration. Stored properties store constant and variable values as part of an instance, whereas computed properties calculate (rather than store) a value. Computed properties are provided by classes, structures, and enumerations. Stored properties are provided only by classes and structures. Stored and computed properties are usually associated with instances of a particular type. However, properties can also be associated with the type itself. Such properties are known as type properties.", lButtontitle: "Button 1", rButtonTitle: "Button 2", lButtonColor: UIColor.blue, rButtonColor: UIColor.white, radius: 5, leftAction: {
             print("Left Button Action")
         }, rightAction: {
             print("Right Button Action")

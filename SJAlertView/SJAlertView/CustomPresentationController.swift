@@ -12,10 +12,12 @@ class CustomPresentationController: UIPresentationController {
 
     static let viewLeftPadding:CGFloat = 40
     static let viewTopPadding:CGFloat = UIScreen.main.bounds.size.height / 3
-    static let viewHeight:CGFloat = 100
     static let buttonTopPadding:CGFloat = 100
     static let buttonHeight:CGFloat = 100
+    static let viewHeight:CGFloat = 100
+    static let viewNeedAddPadding: CGFloat = 165
     
+    static var message: String?
     
     var dimmingView:UIButton = UIButton.init()
     
@@ -27,7 +29,7 @@ class CustomPresentationController: UIPresentationController {
         dimmingView.frame = containerView.bounds
         dimmingView.backgroundColor = UIColor.black
         dimmingView.alpha = 0.0
-        dimmingView.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
+//        dimmingView.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
         containerView.addSubview(dimmingView)
 
         if let transitionCoordinator = presentedViewController.transitionCoordinator {
@@ -64,13 +66,33 @@ class CustomPresentationController: UIPresentationController {
         }
         
         var frame = containerView.bounds
-        frame = frame.insetBy(dx: CustomPresentationController.viewLeftPadding, dy: CustomPresentationController.viewTopPadding)
-//        frame.origin.y = containerView.bounds.size.height - CustomPresentationController.viewHeight - CustomPresentationController.buttonTopPadding - CustomPresentationController.viewLeftPadding
-//        frame.size.height = CustomPresentationController.viewHeight + CustomPresentationController.buttonTopPadding
-//        frame.size.height = CustomPresentationController.viewHeight + CustomPresentationController.buttonTopPadding
         
+        let newOriginX = CustomPresentationController.viewLeftPadding
+        let originY = UIScreen.main.bounds.size.height
+        let newHeight = calculateBackViewHeight()
+        let newOriginY = (originY - newHeight) / 2
+
+        frame = frame.insetBy(dx: newOriginX, dy: newOriginY)
         return frame
         //!!!: Here is the calculated view size of dismiss
+    }
+    
+    fileprivate func calculateBackViewHeight() -> CGFloat {
+        if let text = CustomPresentationController.message {
+            let newWidth = UIScreen.main.bounds.size.width - (CustomPresentationController.viewLeftPadding * 2)
+            
+            let constraint = CGSize(width: newWidth, height: 2000)
+            let attributedText = NSAttributedString(string: text, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: SJAlertView.messageFontSize)])
+            let rect: CGRect = attributedText.boundingRect(with: constraint, options: NSStringDrawingOptions.usesLineFragmentOrigin, context: nil)
+            let size = rect.size
+            
+            if size.height < (UIScreen.main.bounds.size.height - CustomPresentationController.viewNeedAddPadding) {
+                return size.height + CustomPresentationController.viewNeedAddPadding
+            }else {
+                return UIScreen.main.bounds.size.height
+            }
+        }
+        return 0.0
     }
     
     @objc func dismissSelf(){
