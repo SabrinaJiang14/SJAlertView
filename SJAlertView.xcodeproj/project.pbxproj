@@ -15,6 +15,8 @@
 		714E806B2049217A00693EF5 /* CustomPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E80692049217A00693EF5 /* CustomPresentationController.swift */; };
 		714E806C2049217A00693EF5 /* CustomPresentationAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E806A2049217A00693EF5 /* CustomPresentationAnimationController.swift */; };
 		714E806E204921B800693EF5 /* SJAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E806D204921B800693EF5 /* SJAlertView.swift */; };
+		7178A5C7209E044B00B6BCE3 /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7178A5C5209E044B00B6BCE3 /* CustomAlertView.swift */; };
+		7178A5C8209E044B00B6BCE3 /* CustomAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7178A5C6209E044B00B6BCE3 /* CustomAlertView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		714E80692049217A00693EF5 /* CustomPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresentationController.swift; sourceTree = "<group>"; };
 		714E806A2049217A00693EF5 /* CustomPresentationAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresentationAnimationController.swift; sourceTree = "<group>"; };
 		714E806D204921B800693EF5 /* SJAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SJAlertView.swift; sourceTree = "<group>"; };
+		7178A5C5209E044B00B6BCE3 /* CustomAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
+		7178A5C6209E044B00B6BCE3 /* CustomAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomAlertView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 		714E80682049215400693EF5 /* SJAlertView */ = {
 			isa = PBXGroup;
 			children = (
+				7178A5C5209E044B00B6BCE3 /* CustomAlertView.swift */,
+				7178A5C6209E044B00B6BCE3 /* CustomAlertView.xib */,
 				714E806A2049217A00693EF5 /* CustomPresentationAnimationController.swift */,
 				714E80692049217A00693EF5 /* CustomPresentationController.swift */,
 				714E806D204921B800693EF5 /* SJAlertView.swift */,
@@ -142,6 +148,7 @@
 			files = (
 				714E80612049214000693EF5 /* LaunchScreen.storyboard in Resources */,
 				714E805E2049214000693EF5 /* Assets.xcassets in Resources */,
+				7178A5C8209E044B00B6BCE3 /* CustomAlertView.xib in Resources */,
 				714E805C2049214000693EF5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,6 +160,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7178A5C7209E044B00B6BCE3 /* CustomAlertView.swift in Sources */,
 				714E80592049214000693EF5 /* ViewController.swift in Sources */,
 				714E806C2049217A00693EF5 /* CustomPresentationAnimationController.swift in Sources */,
 				714E806E204921B800693EF5 /* SJAlertView.swift in Sources */,

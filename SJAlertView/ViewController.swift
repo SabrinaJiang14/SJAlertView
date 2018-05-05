@@ -29,12 +29,11 @@ class ViewController: UIViewController {
 
 
     @objc func button_Click(){
-        let alert = SJAlertView()
-        alert.setView(title: "Title", mssage: "Properties associate values with a particular class", imageName: nil, lButtontitle: "Button 1", rButtonTitle: nil, lButtonColor: UIColor.yellow, rButtonColor: UIColor.white, radius: 5, leftAction: {
-            print("Left Button Action")
-        }, rightAction: {
-            print("Right Button Action")
-        })
+        let alert = SJAlertView(title: "Title", lblDescriptionText: "Description Description Description Description Description Description Description Description Description Description Description Description", lblDescriptionAttrText: nil, imageName: "check", lButtontitle: "OK", rButtonTitle: "Cancel", lButtonColor: UIColor.blue, rButtonColor: nil, radius: 5, leftAction: {
+            print("This Left button tap")
+        }) {
+            print("This Right button tap")
+        }
         self.present(alert, animated: true, completion: nil)
     }
 }

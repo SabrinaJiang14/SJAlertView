@@ -65,9 +65,9 @@ class CustomPresentationController: UIPresentationController {
         
         var frame = containerView.bounds
         
-        let newOriginX = CustomPresentationController.viewLeftPadding
+//        let newOriginX = CustomPresentationController.viewLeftPadding
 
-        frame = frame.insetBy(dx: newOriginX, dy: 15)
+        frame = frame.insetBy(dx: 0, dy: 0)
         return frame
         //!!!: Here is the calculated view size of dismiss
     }
